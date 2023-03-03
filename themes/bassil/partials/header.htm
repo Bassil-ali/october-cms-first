@@ -1,0 +1,19 @@
+[viewBag]
+
+[staticMenu]
+code = "headermenu"
+==
+<header class="main-header" style="background-color: {{ this.theme.header_color }}">
+    <div class="container clearfix">
+        <h1 class="logo">
+            <img src="" alt="">
+        </h1>
+
+        <nav class="main-nav">
+         
+            {% component 'staticMenu' %}
+            
+        </nav>
+    </div>
+
+</header>

@@ -1,0 +1,59 @@
+title = "Homepage"
+url = "/"
+layout = "default"
+is_hidden = 0
+
+[actors]
+results = 0
+sortOrder = "name desc"
+
+[siteSearchInclude]
+==
+<?php
+use WatchLearn\Movies\Models\Movie;
+    function onStart(){
+        $this['movies'] = Movie::take(4)->get();
+    }
+?>
+==
+<form action="{{ 'search' | page }}" method="get">
+    <input name="q" type="text" placeholder="What are you looking for?" autocomplete="off">
+    <button type="submit">Search</button>
+</form>
+
+<ul class="movie-list">
+    {% for movie in movies %}
+        <li class="ui segment stacked">
+            <h3>
+                <a href="{{ 'movie-single'|page({ genre: movie.genres[0].slug, slug: movie.slug }) }}">
+                    {{ movie.name }} - {{movie.year}}
+                </a>
+            </h3>
+
+            {% for genre in movie.genres %}
+                <a href="/genres/{{ genre.slug }}">{{ genre.genre_title }}</a><br>
+            {% endfor %}
+
+            {{ html_limit(movie.description, 150)|raw }}
+        </li>
+    {% else %}
+        <li class="no-data">No Movies found</li>
+    {% endfor %}
+</ul>
+
+
+<h2>This is our homepage! Yay!</h2>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore reiciendis, porro perspiciatis officia maiores dignissimos. Veritatis ea nulla illo qui.</p>
+<p>Voluptates, nobis odit quasi, minima aliquid necessitatibus voluptatibus dolorum impedit fuga aperiam tempora laborum id a ullam tenetur assumenda, suscipit.</p>
+<p>Similique dolores expedita nemo doloremque corporis atque porro dolor architecto provident, voluptas sapiente aut repellendus animi, necessitatibus. Facilis, quae dolorum.</p>
+<p>Eos quibusdam deleniti assumenda cum aperiam dolorem beatae eveniet eligendi sunt, voluptates quas. Perspiciatis, dolore, molestias excepturi optio sit dignissimos.</p>
+<p>Omnis vero odio laboriosam, nemo blanditiis non excepturi enim voluptatibus possimus ex quaerat nisi nihil consectetur id iure obcaecati reiciendis.</p>
+<p>Veritatis sed architecto iste molestias necessitatibus, dignissimos beatae, ea quidem perspiciatis? Maiores nemo fugiat blanditiis fuga dolore sunt odit veniam?</p>
+<p>Voluptatem amet fugiat harum illo blanditiis reprehenderit, animi possimus repellendus illum, iusto? Explicabo porro accusantium, fugit laborum perspiciatis, nemo totam!</p>
+<p>Autem saepe dicta quae perferendis, nihil, praesentium nesciunt eum aspernatur fugit eaque optio reprehenderit, expedita quos at vel doloremque nobis.</p>
+<p>Tenetur iure quidem ratione perferendis molestias repudiandae officiis consequatur repellat perspiciatis nulla, dolorum incidunt rem assumenda minus exercitationem. Ea, accusamus!</p>
+<p>Nihil laborum quasi ab harum omnis deserunt debitis distinctio laboriosam odit, vero explicabo voluptate veritatis facilis aliquid voluptatibus inventore. Perferendis.</p>{%  set actors = actors.actors %}
+
+
+{% component 'actors' %}
